@@ -4,14 +4,14 @@
 
 using namespace std;
 
-void rysuj_plansze(char tab[3][3]) {
+void draw_board(char tab[3][3]) { //Drawing a board and chars in game.
 	for (int i = 0; i <= 2; i++){
 		cout << "\t " << tab[i][0] << "|" << tab[i][1] << "|" << tab[i][2] << endl;
 		if(i<2)cout << "\t-------" << endl;
 	}
 }
 
-void fullfill(char tab[3][3]) {
+void fullfill(char tab[3][3]) { //Fullfilling array
 	for (int i = 0; i <= 2; i++) {
 		for (int j = 0; j <= 2; j++) {
 			tab[i][j] = (char)' ';
@@ -19,18 +19,18 @@ void fullfill(char tab[3][3]) {
 	}
 }
 
-void wpisz_miejsce(char tab[3][3]) {
+void player_move(char tab[3][3]) { //Player move. Choosing where to place X.
 	int x, y;
 	int w = 0;
 	while (w==0) {
-	cout << "Gdzie chcesz umiescic X?\nPodaj kolumne (pionowo)\n";
+	cout << "Where you want to place X?\nSpecify column (vertical)\n";
 	cin >> x;
-	cout << "Teraz podaj szereg (poziomo)\n";
+	cout << "Now specify row (horizontal)\n";
 	cin >> y;
 	x = x - 1;
 	y = y - 1;
 	if (tab[y][x] == 'O' or tab[y][x] == 'X') {
-		cout << "Nie mozesz tu postawic X\n";
+		cout << "Can't place X here\n";
 	}
 	else {
 		tab[y][x] = 'X';
@@ -39,7 +39,7 @@ void wpisz_miejsce(char tab[3][3]) {
 	}
 }
 
-void ruch_komputera(char tab[3][3]) {
+void Computer_move(char tab[3][3]) { //Computer move. Randomly placing O.
 	int x, y;
 	int w = 0;
 	while (w < 100) {
@@ -55,16 +55,16 @@ void ruch_komputera(char tab[3][3]) {
 }
 }
 
-bool sprawdz_wygranaX(char tab[3][3]) {//sprawdzamy wygraną jest 8 możliwości wygranej
+bool check_win_X(char tab[3][3]) {//Checking Win for X
 	bool win=false;
-	if (tab[0][0] == 'X' && tab[0][1] == 'X' && tab[0][2] == 'X')  win = true;  //szereg pierwszy
-	if (tab[1][0] == 'X' && tab[1][1] == 'X' && tab[1][2] == 'X')  win = true;  //szereg drugi
-	if (tab[2][0] == 'X' && tab[2][1] == 'X' && tab[2][2] == 'X')  win = true;  //szereg trzeci
-	if (tab[0][0] == 'X' && tab[1][0] == 'X' && tab[2][0] == 'X')  win = true;  //kolumna pierwsza
-	if (tab[0][1] == 'X' && tab[1][1] == 'X' && tab[2][1] == 'X')  win = true;  //kolmuna druga
-	if (tab[0][2] == 'X' && tab[1][2] == 'X' && tab[2][2] == 'X')  win = true;  //kolumna trzecia
-	if (tab[0][0] == 'X' && tab[1][1] == 'X' && tab[2][2] == 'X')  win = true;  //skos pierwszy
-	if (tab[0][2] == 'X' && tab[1][1] == 'X' && tab[2][0] == 'X')  win = true;  //skos drugi
+	if (tab[0][0] == 'X' && tab[0][1] == 'X' && tab[0][2] == 'X')  win = true;  //first row
+	if (tab[1][0] == 'X' && tab[1][1] == 'X' && tab[1][2] == 'X')  win = true;  //second row
+	if (tab[2][0] == 'X' && tab[2][1] == 'X' && tab[2][2] == 'X')  win = true;  //third row
+	if (tab[0][0] == 'X' && tab[1][0] == 'X' && tab[2][0] == 'X')  win = true;  //first column
+	if (tab[0][1] == 'X' && tab[1][1] == 'X' && tab[2][1] == 'X')  win = true;  //second column
+	if (tab[0][2] == 'X' && tab[1][2] == 'X' && tab[2][2] == 'X')  win = true;  //third column
+	if (tab[0][0] == 'X' && tab[1][1] == 'X' && tab[2][2] == 'X')  win = true;  //first cross
+	if (tab[0][2] == 'X' && tab[1][1] == 'X' && tab[2][0] == 'X')  win = true;  //second cross
 	if (win == true) {
 		return win = true;
 	}
@@ -73,16 +73,16 @@ bool sprawdz_wygranaX(char tab[3][3]) {//sprawdzamy wygraną jest 8 możliwości
 	}
 }
 
-bool sprawdz_wygranaO(char tab[3][3]) {//sprawdzamy wygraną jest 8 możliwości wygranej
+bool check_win_O(char tab[3][3]) { //Checking Win for O
 	bool win = false;
-	if (tab[0][0] == 'O' && tab[0][1] == 'O' && tab[0][2] == 'O')  win = true;  //szereg pierwszy
-	if (tab[1][0] == 'O' && tab[1][1] == 'O' && tab[1][2] == 'O')  win = true;  //szereg drugi
-	if (tab[2][0] == 'O' && tab[2][1] == 'O' && tab[2][2] == 'O')  win = true;  //szereg trzeci
-	if (tab[0][0] == 'O' && tab[1][0] == 'O' && tab[2][0] == 'O')  win = true;  //kolumna pierwsza
-	if (tab[0][1] == 'O' && tab[1][1] == 'O' && tab[2][1] == 'O')  win = true;  //kolmuna druga
-	if (tab[0][2] == 'O' && tab[1][2] == 'O' && tab[2][2] == 'O')  win = true;  //kolumna trzecia
-	if (tab[0][0] == 'O' && tab[1][1] == 'O' && tab[2][2] == 'O')  win = true;  //skos pierwszy
-	if (tab[0][2] == 'O' && tab[1][1] == 'O' && tab[2][0] == 'O')  win = true;  //skos drugi
+	if (tab[0][0] == 'O' && tab[0][1] == 'O' && tab[0][2] == 'O')  win = true;  //first row
+	if (tab[1][0] == 'O' && tab[1][1] == 'O' && tab[1][2] == 'O')  win = true;  //second row
+	if (tab[2][0] == 'O' && tab[2][1] == 'O' && tab[2][2] == 'O')  win = true;  //third row
+	if (tab[0][0] == 'O' && tab[1][0] == 'O' && tab[2][0] == 'O')  win = true;  //first column
+	if (tab[0][1] == 'O' && tab[1][1] == 'O' && tab[2][1] == 'O')  win = true;  //second column
+	if (tab[0][2] == 'O' && tab[1][2] == 'O' && tab[2][2] == 'O')  win = true;  //third column
+	if (tab[0][0] == 'O' && tab[1][1] == 'O' && tab[2][2] == 'O')  win = true;  //first cross
+	if (tab[0][2] == 'O' && tab[1][1] == 'O' && tab[2][0] == 'O')  win = true;  //second cross
 	if (win == true) {
 		return win = true;
 	}
@@ -91,39 +91,39 @@ bool sprawdz_wygranaO(char tab[3][3]) {//sprawdzamy wygraną jest 8 możliwości
 	}
 }
 
-int main()
+int main()  //main program
 {
 	srand(time(NULL));
-	cout << "\t=== Witaj w grze w kolko i krzyzyk ===" << endl;
-	cout << "Aby rozpoczac gre nacisnij przycisk...";
+	cout << "\t=== Welcome to tic-tac-toe ===" << endl; //welcoming
+	cout << "Press any key to begin";
 	getchar();
 	bool win = false;
 	bool lose = false;
 	bool draw = false;
 	int i = 0;
-	char pole[3][3];
-	fullfill(pole);
-	while (win == false && lose == false && draw == false) {
-		system("cls");
-		rysuj_plansze(pole);
-		wpisz_miejsce(pole);
-		win = sprawdz_wygranaX(pole);
-		ruch_komputera(pole);
-		lose = sprawdz_wygranaO(pole);
+	char field[3][3];
+	fullfill(field);
+	while (win == false && lose == false && draw == false) { //loop for the game.
+		system("cls"); //clearing screen
+		draw_board(field);
+		player_move(field);
+		win = check_win_X(field);
+		Computer_move(field);
+		lose = check_win_O(field);
 		i++;
-		if (i >= 5) {
+		if (i >= 5) { //condition to check draw
 			draw = true;
 		}
 	}
 	system("cls");
 	if (win == true) {
-		cout << "Brawo Wygrana!!!\n";
+		cout << "Congratulations!!! You win!!!\n";
 	}
 	else if (lose == true) {
-		cout << "Niestety Przegrana.\n";
+		cout << "Unfortunately you lose. Better luck next time.\n";
 	}
 	else if (draw == true) {
-		cout << "Remis.\n";
+		cout << "Draw.\n";
 	}
-	rysuj_plansze(pole);
+	draw_board(field);
 }
